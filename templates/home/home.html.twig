@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home!{% endblock %}
+
+{% block body %}
+    <!--==========================
+    Header
+  ============================-->
+    {{ include('home/home_components/header.html.twig') }}
+
+    <!--==========================
+    Intro Section
+  ============================-->
+    {{ include('home/home_components/intro.html.twig') }}
+
+    <!--==========================
+    Main
+  ============================-->
+    <main id="main">
+        {{ include('home/home_components/main/featured-services.html.twig') }}
+        {{ include('home/home_components/main/about.html.twig') }}
+        {{ include('home/home_components/main/services.html.twig') }}
+        {{ include('home/home_components/main/call-to-action.html.twig') }}
+        {#{{ include('home/home_components/main/skills.html.twig') }}
+        {{ include('home/home_components/main/facts.html.twig') }}#}
+        {{ include('home/home_components/main/portfolio.html.twig') }}
+        {#{{ include('home/home_components/main/clients.html.twig') }}
+        {{ include('home/home_components/main/testimonials.html.twig') }}
+        {{ include('home/home_components/main/team.html.twig') }}#}
+        {{ include('home/home_components/main/contact.html.twig') }}
+    </main>
+
+    <!--==========================
+    Footer
+  ============================-->
+    {{ include('home/home_components/footer.html.twig') }}
+{% endblock %}
