@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Devis en ligne !{% endblock %}
+
+{% block body %}
+    {% for categorie in categories %}
+        <a class="btn btn-info" href="{{ path('bycategorie', {'id': 'categorie.id'}) }}">{{ categorie.nom}}</a>
+    {% endfor %}
+{% endblock %}
