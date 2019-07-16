@@ -52,33 +52,33 @@ class UtilisateursFixtures extends Fixture implements OrderedFixtureInterface
                     $commande = new  Commande();
                     $commande->setReference($faker->randomNumber(null, false))
                         ->setDate($faker->dateTimeBetween('-2years', 'now'))
-                        ->setDevis([
+                        ->setUtilisateur($utilisateur)
+                        ->setProduits([
                             '0' => [
-                                $utilisateur->getId() => $this->getReference('produit')
+                                $this->getReference('produit') => '5'
                             ],
                             '1' => [
-                                $utilisateur->getId() => $this->getReference('produit1')
+                                $this->getReference('produit1') => '3'
                             ],
                             '2' => [
-                                $utilisateur->getId() => $this->getReference('produit2')
+                                $this->getReference('produit2') => '7'
                             ],
                             '3' => [
-                                $utilisateur->getId() => $this->getReference('produit3')
+                                $this->getReference('produit3') => '2'
                             ],
                             '4' => [
-                                $utilisateur->getId() => $this->getReference('produit4')
+                                $this->getReference('produit4') => '4'
                             ],
                             '5' => [
-                                $utilisateur->getId() => $this->getReference('produit5')
+                                $this->getReference('produit5') => '6'
                             ],
                             '6' => [
-                                $utilisateur->getId() => $this->getReference('produit6')
+                                $this->getReference('produit6') => '9'
                             ],
-                            '8' => [
-                                $utilisateur->getId() => $this->getReference('produit8')
-                            ],
+                            '7' => [
+                                $this->getReference('produit8') => '8'
+                            ]
                         ])
-                        ->setUtilisateur($utilisateur)
                     ;
                     $manager->persist($commande);
                 }

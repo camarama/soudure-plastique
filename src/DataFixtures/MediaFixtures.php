@@ -40,49 +40,49 @@ class MediaFixtures extends Fixture implements OrderedFixtureInterface
 
         $image4 = new Media();
         $image4->setAlt('caisse gros volume')
-            ->setPath($faker->imageUrl(150, 150))
+            ->setPath($faker->imageUrl(350, 240))
         ;
         $manager->persist($image4);
 
         $image5 = new Media();
         $image5->setAlt('bac moyen volume')
-            ->setPath($faker->imageUrl(150, 150))
+            ->setPath($faker->imageUrl(350, 240))
         ;
         $manager->persist($image5);
 
         $image6 = new Media();
         $image6->setAlt('bac moyen volume')
-            ->setPath($faker->imageUrl(150, 150))
+            ->setPath($faker->imageUrl(350, 240))
         ;
         $manager->persist($image6);
 
         $image7 = new Media();
         $image7->setAlt('conteneur moyen volume')
-            ->setPath($faker->imageUrl(150, 150))
+            ->setPath($faker->imageUrl(350, 240))
         ;
         $manager->persist($image7);
 
         $image8 = new Media();
         $image8->setAlt('bac avec entré air')
-            ->setPath($faker->imageUrl(150, 150))
+            ->setPath($faker->imageUrl(350, 240))
         ;
         $manager->persist($image8);
 
         $image9 = new Media();
         $image9->setAlt('palette avec entrée air')
-            ->setPath($faker->imageUrl(150, 150))
+            ->setPath($faker->imageUrl(350, 240))
         ;
         $manager->persist($image9);
 
         $image10 = new Media();
         $image10->setAlt('conteneur gros volume double')
-            ->setPath($faker->imageUrl(150, 150))
+            ->setPath($faker->imageUrl(350, 240))
         ;
         $manager->persist($image10);
 
         $image11 = new Media();
         $image11->setAlt('caisse gros volume')
-            ->setPath($faker->imageUrl(150, 150))
+            ->setPath($faker->imageUrl(350, 240))
         ;
         $manager->persist($image11);
 

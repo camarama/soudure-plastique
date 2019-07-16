@@ -29,7 +29,7 @@ class Commande
     /**
      * @ORM\Column(type="array")
      */
-    private $devis = [];
+    private $produits = [];
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Utilisateur", inversedBy="commandes")
@@ -65,18 +65,6 @@ class Commande
         return $this;
     }
 
-    public function getDevis(): ?array
-    {
-        return $this->devis;
-    }
-
-    public function setDevis(array $devis): self
-    {
-        $this->devis = $devis;
-
-        return $this;
-    }
-
     public function getUtilisateur(): ?Utilisateur
     {
         return $this->utilisateur;
@@ -87,5 +75,21 @@ class Commande
         $this->utilisateur = $utilisateur;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProduits()
+    {
+        return $this->produits;
+    }
+
+    /**
+     * @param mixed $produits
+     */
+    public function setProduits($produits): void
+    {
+        $this->produits = $produits;
     }
 }

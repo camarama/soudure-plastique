@@ -3,10 +3,6 @@
 {% block title %}Home!{% endblock %}
 
 {% block body %}
-    <!--==========================
-    Header
-  ============================-->
-    {{ include('home/home_components/header.html.twig') }}
 
     <!--==========================
     Intro Section
@@ -23,15 +19,12 @@
         {{ include('home/home_components/main/call-to-action.html.twig') }}
         {#{{ include('home/home_components/main/skills.html.twig') }}
         {{ include('home/home_components/main/facts.html.twig') }}#}
-        {{ include('home/home_components/main/portfolio.html.twig') }}
+        {#{{ include('home/home_components/main/portfolio.html.twig') }}#}
         {#{{ include('home/home_components/main/clients.html.twig') }}
         {{ include('home/home_components/main/testimonials.html.twig') }}
         {{ include('home/home_components/main/team.html.twig') }}#}
         {{ include('home/home_components/main/contact.html.twig') }}
     </main>
 
-    <!--==========================
-    Footer
-  ============================-->
-    {{ include('home/home_components/footer.html.twig') }}
+
 {% endblock %}

@@ -70,6 +70,7 @@ h1, h2, h3, h4, h5, h6 {
 # Header
 --------------------------------------------------------------*/
 #header {
+  background: rgba(0, 0, 0, 0.7);
   padding: 30px 0;
   height: 92px;
   position: fixed;
@@ -81,7 +82,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #header.header-scrolled {
-  background: rgba(0, 0, 0, 0.9);
+  /*background: rgba(0, 0, 0, 0.9);*/
   padding: 20px 0;
   height: 72px;
   transition: all 0.5s;
@@ -553,6 +554,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 /* Section with background
 --------------------------------*/
 .section-bg {
+  margin-top: 50px;
   background: #f7f7f7;
 }
 
@@ -997,6 +999,34 @@ body.mobile-nav-active #mobile-nav-toggle {
   font-weight: 500;
   font-size: 14px;
   text-transform: uppercase;
+}
+
+output {
+  position: absolute;
+  background-image: linear-gradient(top, #18d26e, #18d26e);
+  width: 40px;
+  height: 30px;
+  text-align: center;
+  color: black;
+  border-radius: 10px;
+  display: inline-block;
+  font: bold 15px/30px Georgia;
+  bottom: 100%;
+  left: 1%;
+  margin-left: -1%;
+}
+output:after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-top: 10px solid #18d26e;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  margin-top: -1px;
 }
 
 /* Clients Section

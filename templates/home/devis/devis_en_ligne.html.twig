@@ -1,9 +1,115 @@
 {% extends 'base.html.twig' %}
+{% set prixH = 59.89 %}
+{% set totalHT = 0 %}
+{% set TVA = 0 %}
+{% set totalTTC = 0 %}
 
 {% block title %}Devis en ligne !{% endblock %}
 
 {% block body %}
-    {% for categorie in categories %}
-        <a class="btn btn-info" href="{{ path('bycategorie', {'id': 'categorie.id'}) }}">{{ categorie.nom}}</a>
-    {% endfor %}
+<section id="portfolio" class="section-bg">
+    <div class="container">
+        <header class="section-header">
+            <h3 class="section-title">Devis en ligne</h3>
+        </header>
+        <div class="row align-items-center">
+            <div class="col-8 border-right">
+                {#{{ dump(session.produit.utilisateur.id) }}#}
+               {# <address>
+                    <strong>nom entreprise</strong><br>
+                    #}{# {{ session.produit.utilisateur.secteur }}<br>
+                     {{ session.produit.utilisateur.adresse }}<br>#}{#
+
+                </address>#}
+                {#{% for label, messages in app.flashes(['success', 'warning']) %}
+                    {% for message in messages %}
+                        <div class="flash-{{ label }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}#}
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Produit</th>
+                        <th scope="col">Quantité</th>
+                        <th scope="col">Durée Travail Estimée</th>
+                        <th scope="col">Prix HT</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if produits|length == 0 %}
+                        <tr>
+                            <td colspan="5" class="text-center alert-danger">Vous n'avez aucun produit dans votre devis en ligne !</td>
+                        </tr>
+                    {% endif %}
+                    <div class="d-flex justify-content-end mt-3 mb-3">
+                        <a class="btn btn-primary" href="{{ path('presentation') }}">Ajouter un autre produit</a>
+                    </div>
+                        {% for prd in produits %}
+                            <tr class="text-muted">
+                                <td>{{ prd.nom }}</td>
+                                <td>{{ devis[prd.id] }}</td>
+                                <td class="text-center">{{ ((devis[prd.id]/30)* 7)|round(0, 'ceil') }} H</td>
+                                <td class="text-center">{{ (((devis[prd.id]/30)* 7)|round(0, 'ceil') * prixH)|round(2) }} €</td>
+                                <td class="text-center">
+                                    <a class="btn btn-warning" title="Modifier" href="{{ path('produit', {'id': prd.id}) }}">
+                                        <i class="ion ion-ios-cog"></i>
+                                    </a>
+                                    <a class="btn btn-danger" title="Supprimer" href="{{ path('supprimer_produit', {'id': prd.id}) }}">
+                                        <i class="ion ion-ios-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% set totalHT = totalHT + ((((devis[prd.id]/30)* 7)|round(0, 'ceil') * prixH)|round(2)) %}
+                            {% set TVA = ((((devis[prd.id]/30)* 7)|round(0, 'ceil') * prixH)|round(2)) * 0.2 %}
+                            {% set totalTTC = totalHT * 1.2 %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% if produits|length != 0 %}
+                <div class="col-4" style="margin-top: 50px">
+                <p class="alert-warning" role="alert"> <i class=" ion ion-alert-circled"></i> Ce devis est valable 30 jours à compter du
+                    <strong>{{ "now"|date('d/m/Y') }}</strong> et ne contient pas les frais de déplacements</p>
+                <ul class="list-group list-group-flush">
+                    {#<li class="list-group-item d-flex justify-content-between align-items-center">
+                        Durée de travail estimée
+                        <span class="badge badge-primary badge-pill" style="font-size: medium">heures</span>
+                    </li>#}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Prix Horaire
+                        <span class="badge badge-primary badge-pill" style="font-size: medium">{{ prixH }} € / Heure</span>
+                    </li>
+                    {#<li class="list-group-item d-flex justify-content-between align-items-center">
+                        Prix Hors Taxe
+                        <span class="badge badge-primary badge-pill" style="font-size: medium">prix HT €</span>
+                    </li>#}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        TVA à 20%
+                        <span class="badge badge-primary badge-pill" style="font-size: medium">{{ (totalTTC - totalHT)|round(2) }} €</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Prix TTC
+                        <span class="badge badge-primary badge-pill" style="font-size: medium">{{ (totalTTC)|round(2) }} €</span>
+                    </li>
+                </ul>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="cgt" checked="checked">
+                    <label for="cgt" class="form-check-label">
+                        En cochant cette case, je reconnais avoir lu et accepté les <a href="#" class="text-capitalize">Conditions
+                            Générales</a>.
+                    </label>
+                    <div class="d-flex justify-content-center mt-3">
+                        <a class="btn btn-success ml-3" href="#">Accepter le devis</a>
+                    </div>
+                </div>
+
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
 {% endblock %}
+
