@@ -21,13 +21,13 @@
                      {{ session.produit.utilisateur.adresse }}<br>#}{#
 
                 </address>#}
-                {#{% for label, messages in app.flashes(['success', 'warning']) %}
+                {% for label, messages in app.flashes %}
                     {% for message in messages %}
-                        <div class="flash-{{ label }}">
+                        <div class="alert alert-success">
                             {{ message }}
                         </div>
                     {% endfor %}
-                {% endfor %}#}
+                {% endfor %}
                 <table class="table table-striped">
                     <thead>
                     <tr>
