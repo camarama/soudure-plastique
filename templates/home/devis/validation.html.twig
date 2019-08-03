@@ -1,0 +1,147 @@
+{% extends 'base.html.twig' %}
+
+{% set prixH = 59.58 %}
+{% set totalHT = 0 %}
+{% set TVA = 0 %}
+{% set totalTTC = 0 %}
+
+{% block title %}Validation devis !{% endblock %}
+
+{% block body %}
+    <section id="portfolio" class="section-bg">
+        <div class="container">
+            <header class="card-header text-center">
+                <h3 class="card-title text-black">Validation de votre devis</h3>
+            </header>
+            <div class="row align-items-center">
+                <div class="col-8 border-right">
+                    {#{{ dump(session.produit.utilisateur.id) }}#}
+                     <address>
+                         <strong>{{ utilisateur.nom }}</strong><br>
+                          <span>{{ adresse.adresse }}<br>
+                          {{ adresse.cp }} {{ adresse.ville }} - {{ adresse.pays }}</span>
+                     </address>
+                    {% for type, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ type }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Produit</th>
+                            <th scope="col">Quantité</th>
+                            <th scope="col">Couleur</th>
+                            <th scope="col">Durée Travail Estimée</th>
+                            <th scope="col">Prix HT</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for prd in produits %}
+                            <tr class="text-muted">
+                                <td>{{ prd.nom }}</td>
+                                <td>{{ devis[prd.id].quantite }}</td>
+                                <td>
+                                    <hr align="center" style="background-color: {{ devis[prd.id].couleur }}; width: 100%; height: 10px">
+                                </td>
+                                <td class="text-center">{{ ((devis[prd.id].quantite/30)* 7)|round(0, 'ceil') }} H</td>
+                                <td class="text-center">{{ ((((devis[prd.id].quantite/30)* 7)|round(0, 'ceil') * prixH)|round(2))|number_format(2, ', ', ' ') }} €</td>
+                            </tr>
+                            {% set totalHT = totalHT + ((((devis[prd.id].quantite/30)* 7)|round(0, 'ceil') * prixH)|round(2)) %}
+                            {% set TVA = ((((devis[prd.id].quantite/30)* 7)|round(0, 'ceil') * prixH)|round(2)) * 0.2 %}
+                            {% set totalTTC = totalHT * 1.2 %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+{#                {% if produits|length != 0 %}#}
+                    <div class="col-4" {% if devis == false %}hidden{% endif %}>
+                        <div class="alert alert-secondary text-justify mt-2">
+                            <p class="card-text text-muted">
+                                <b>Numéro de devis: </b>{{ utilisateur.id }}{{ 'now'|date('Y') }}{{ produits|length }}{{ 'now'|date('Hi') }}<br>
+                                <b>Date: </b>{{ "now"|localizeddate('none', 'none', null, null, 'd/MM/y') }}
+                            </p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            {#<li class="list-group-item d-flex justify-content-between align-items-center">
+                                Durée de travail estimée
+                                <span class="badge badge-primary badge-pill" style="font-size: medium">heures</span>
+                            </li>#}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Forfait Horaire
+                                <span class="badge badge-secondary badge-pill"
+                                      style="font-size: medium">{{ prixH|number_format(2, ', ') }} €</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Total HT
+                                <span class="badge badge-secondary badge-pill"
+                                      style="font-size: medium">{{ totalHT|number_format(2, ', ', ' ') }} €</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Frais Réels
+                                <span class="badge badge-secondary badge-pill" style="font-size: medium">TR €</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                TVA 20%
+                                <span class="badge badge-secondary badge-pill"
+                                      style="font-size: medium">{{ ((totalTTC - totalHT)|round(2))|number_format(2, ', ', ' ') }} €</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Total TTC
+                                <span class="badge badge-secondary badge-pill"
+                                      style="font-size: medium">{{ ((totalTTC)|round(2))|number_format(2, ', ', ' ') }} €</span>
+                            </li>
+                        </ul>
+                        <div class="card border mt-3 pl-2 form-group">
+                            {{ form_start(agree_form) }}
+                                <div class="card-body text-muted">
+                                    {{ form_widget(agree_form) }}
+                                    En cochant cette case, je reconnais avoir pris connaissance et accepté les
+                                    <a href="#" class="text-info">conditions génerales d'utilisation</a>.
+                                </div>
+                            <div class="d-flex justify-content-between mb-2 mr-2">
+                                <a href="{{ path('adresse') }}" class="btn btn-primary text-white">Retour</a>
+                                <button class="btn btn-success text-white">Valider le devis</button>
+                            </div>
+                            {{ form_end(agree_form) }}
+                        </div>
+                    </div>
+{#                {% endif %}#}
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{#
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+
+        function getDistance() {
+            var origin = ["452 allée des ormes, 59130 lambersart"];
+            var destination = [document.getElementById("adresse").innerText];
+            var distanceService = new google.maps.DistanceMatrixService;
+            distanceService.getDistanceMatrix({
+                origins: origin,
+                destinations: destination,
+                travelMode: 'DRIVING',
+                unitSystem: google.maps.UnitSystem.METRIC,
+                avoidHighways: false,
+                avoidTolls: false
+            }, function (response, status) {
+                if (status !== 'OK') {
+                    console.log("L'erreur est: " + status);
+                } else {
+                    console.log(origin);
+                    console.log(destination);
+                    console.log(response);
+                }
+            });
+        };
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMZpAhrCsZUYSZM27eAHr9U2ZI1nskCm8&callback=getDistance">
+    </script>
+{% endblock %}#}

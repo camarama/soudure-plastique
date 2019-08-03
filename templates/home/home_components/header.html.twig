@@ -9,11 +9,11 @@
 
         <nav id="nav-menu-container">
             <ul class="nav-menu text-capitalize">
-                <li class="menu-active"><a href="#intro">accueil</a></li>
-                <li><a href="#about">à propos</a></li>
-                <li><a href="#services">avantages</a></li>
+                <li class="menu-active"><a href="{{ path('home') }}#featured-services">accueil</a></li>
+                <li><a href="{{ path('home') }}#about">à propos</a></li>
+                <li><a href="{{ path('home') }}#services">avantages</a></li>
 {#                <li><a href="#team">équipe</a></li>#}
-                <li><a href="#call-to-action">devis en ligne</a></li>
+                <li><a href="{{ path('home') }}#call-to-action">devis en ligne</a></li>
                 {#<li class="menu-has-children"><a href="">Drop Down</a>
                     <ul>
                         <li><a href="#">Drop Down 1</a></li>
@@ -22,7 +22,7 @@
                         <li><a href="#">Drop Down 5</a></li>
                     </ul>
                 </li>#}
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="{{ path('home') }}#contact">Contact</a></li>
             </ul>
         </nav><!-- #nav-menu-container -->
     </div>

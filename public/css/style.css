@@ -603,7 +603,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 /* About Us Section
 --------------------------------*/
 #about {
-  background: url("../img/about-bg.jpg") center top no-repeat fixed;
+  background: url("../img/zone_euro_2.jpg") center top no-repeat fixed;
   background-size: cover;
   padding: 60px 0 40px 0;
   position: relative;
@@ -1484,4 +1484,14 @@ output:after {
   text-align: center;
   font-size: 13px;
   color: #ddd;
+}
+
+/* Devis custom css*/
+#account .ui-widget-header {
+  background-color: #18d26e; !important;
+}
+
+#account .ui-state-default {
+  background-color: #18d26e; !important;
+  border-radius: 50%;
 }

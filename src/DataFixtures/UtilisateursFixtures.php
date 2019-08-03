@@ -2,8 +2,9 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Commande;
+
 use App\Entity\Info;
+use App\Entity\Service;
 use App\Entity\Utilisateur;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
@@ -49,44 +50,46 @@ class UtilisateursFixtures extends Fixture implements OrderedFixtureInterface
 
                 for ($k = 0; $k <= mt_rand(2, 6); $k++)
                 {
-                    $commande = new  Commande();
-                    $commande->setReference($faker->randomNumber(null, false))
+                    $service = new Service();
+                    $service->setReference($faker->randomNumber(null, false))
                         ->setDate($faker->dateTimeBetween('-2years', 'now'))
                         ->setUtilisateur($utilisateur)
-                        ->setProduits([
+                        ->setPrestation([
                             '0' => [
-                                $this->getReference('produit') => '5'
+                                '1' => '5'
                             ],
                             '1' => [
-                                $this->getReference('produit1') => '3'
+                                '2' => '3'
                             ],
                             '2' => [
-                                $this->getReference('produit2') => '7'
+                                '3' => '7'
                             ],
                             '3' => [
-                                $this->getReference('produit3') => '2'
+                                '4' => '2'
                             ],
                             '4' => [
-                                $this->getReference('produit4') => '4'
+                                '5' => '4'
                             ],
                             '5' => [
-                                $this->getReference('produit5') => '6'
+                                '6' => '6'
                             ],
                             '6' => [
-                                $this->getReference('produit6') => '9'
+                                '7' => '9'
                             ],
                             '7' => [
-                                $this->getReference('produit8') => '8'
+                                '8' => '8'
                             ]
                         ])
                     ;
-                    $manager->persist($commande);
+                    $manager->persist($service);
                 }
             }
         }
 
         $manager->flush();
     }
+
+
 
     /**
      * Get the order of this fixture

@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Infos{% endblock %}
+
+{% block body %}
+    <section id="portfolio" class="section-bg">
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <!-- ============================================================== -->
+            <!-- Start Page Content -->
+            <!-- ============================================================== -->
+{#            <div class="">#}
+                <div class="row m-2">
+                    <div class="col-md-12">
+                        <h3 class="m-2 text-success">Formulaire d'adresse</h3>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card border-0" {% if utilisateur.infos|length != 0 %} hidden {% endif %}>
+                            <div class="card-header">
+                                <p class="card-subtitle text-muted">Ajouter une adresse</p>
+                            </div>
+                            <div class="card-body">
+                                {{ form_start(form) }}
+                                {{ form_errors(form) }}
+
+                                {{ form_row(form.siret) }}
+                                {{ form_row(form.telephone) }}
+                                {{ form_row(form.adresse) }}
+                                {{ form_row(form.cp) }}
+                                {{ form_row(form.ville) }}
+                                {{ form_row(form.pays) }}
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-success float-right">Enregister</button>
+                                </div>
+                                {{ form_end(form) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card border-0">
+                            <div class="card-header">
+                                <p class="card-subtitle text-muted">Choisir une adresse</p>
+                            </div>
+                            <div class="card-body">
+                                <form action="{{ path('validation') }}" method="post">
+                                    <blockquote class="blockquote">
+                                        <p class="mb-0">{{ utilisateur.nom }}</p>
+                                        <footer class="blockquote-footer text-muted"> Vous
+                                            avez {{ utilisateur.infos|length }}
+                                            {% if utilisateur.infos|length > 1 %}adresses {% else %} adresse {% endif %}</footer>
+                                    </blockquote>
+                                    {% for info in utilisateur.infos %}
+                                        <div class="custom-control custom-radio mb-3">
+                                            <input type="radio" id="{{ info.id }}" value="{{ info.id }}"
+                                                   class="custom-control-input"
+                                                   name="adresse_reparation" {% if loop.index0 == 0 %} checked="checked" {% endif %}>
+                                            <label for="{{ info.id }}" class="custom-control-label adresse">
+                                                {{ info.adresse }}
+                                                {{ info.cp }}
+                                                {{ info.ville }}
+                                                - {{ info.pays }}
+                                            </label>
+                                        </div>
+                                    {% endfor %}
+                                    <div class="card-footer">
+                                        <button class="btn btn-success float-right">Valider mon adresse de réparation</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+{#            </div>#}
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+    </section>
+{% endblock %}

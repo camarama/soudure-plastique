@@ -1,0 +1,29 @@
+{% extends 'admin_user.html.twig' %}
+
+{% block body %}
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper">
+        {% include 'user_admin/admin__components/header.html.twig' %}
+
+        {% include 'user_admin/admin__components/left_sidebar.html.twig' %}
+
+
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+
+            {% block page_wrapper %}{% endblock %}
+
+            {% include 'user_admin/admin__components/footer.html.twig' %}
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+{% endblock %}

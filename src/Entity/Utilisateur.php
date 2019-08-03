@@ -38,24 +38,26 @@ class Utilisateur implements UserInterface
     private $password;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Info", mappedBy="utilisateur")
+     * @ORM\OneToMany(targetEntity="App\Entity\Info", mappedBy="utilisateur", cascade={"remove"})
+     * @ORM\JoinColumn(nullable=true)
      */
     private $infos;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Commande", mappedBy="utilisateur")
-     */
-    private $commandes;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $nom;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Service", mappedBy="utilisateur", cascade={"remove"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $services;
+
     public function __construct()
     {
         $this->infos = new ArrayCollection();
-        $this->commandes = new ArrayCollection();
+        $this->services = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -167,37 +169,6 @@ class Utilisateur implements UserInterface
         return $this;
     }
 
-    /**
-     * @return Collection|Commande[]
-     */
-    public function getCommandes(): Collection
-    {
-        return $this->commandes;
-    }
-
-    public function addCommande(Commande $commande): self
-    {
-        if (!$this->commandes->contains($commande)) {
-            $this->commandes[] = $commande;
-            $commande->setUtilisateur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCommande(Commande $commande): self
-    {
-        if ($this->commandes->contains($commande)) {
-            $this->commandes->removeElement($commande);
-            // set the owning side to null (unless already changed)
-            if ($commande->getUtilisateur() === $this) {
-                $commande->setUtilisateur(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getNom(): ?string
     {
         return $this->nom;
@@ -206,6 +177,37 @@ class Utilisateur implements UserInterface
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Service[]
+     */
+    public function getServices(): Collection
+    {
+        return $this->services;
+    }
+
+    public function addService(Service $service): self
+    {
+        if (!$this->services->contains($service)) {
+            $this->services[] = $service;
+            $service->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeService(Service $service): self
+    {
+        if ($this->services->contains($service)) {
+            $this->services->removeElement($service);
+            // set the owning side to null (unless already changed)
+            if ($service->getUtilisateur() === $this) {
+                $service->setUtilisateur(null);
+            }
+        }
 
         return $this;
     }

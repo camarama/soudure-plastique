@@ -3,81 +3,101 @@
 {% block title %}preparation devis{% endblock %}
 
 {% block body %}
-<section id="portfolio" class="section-bg">
-    <div class="container">
-        <header>
-            <h3 class="text-muted">Dernière etape pour voir votre devis !!!</h3>
-        </header>
-        <div class="row align-items-center">
-            <div class="col">
-                <div class="media">
-                    <img class="mr-3" src="{{ produit.image.path }}" alt="{{ produit.nom }}">
-                    <div class="media-body">
-                        <h5 class="mt-0">{{ produit.nom }}</h5>
-                        {{ produit.description }}
+    <section id="portfolio" class="section-bg">
+        <div class="container">
+            <header class="text-center">
+                <h3 class="text-muted">Formulaire de devis en ligne !!!</h3>
+                <hr style="width: 15%">
+            </header>
+            <div class="row align-items-start">
+                <div class="col">
+                    <div class="media">
+                        <img class="mr-3" src="{{ produit.image.path }}" alt="{{ produit.nom }}"
+                             style="width: 80px">
+                        <div class="media-body">
+                            <h5 class="mt-0">{{ produit.nom }}</h5>
+                            {{ produit.description }}
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col">
-                <form action="{{ path('ajout_produit', {'id': produit.id}) }}" method="get">
-                    {#<div>
-                        <input id="quantite" type="range" class="form-control" min="30" max="600"
-                               name="quantite" step="30">
-                        <output for="quantite" onchange="this.form.submit()"></output>
-                    </div>#}
-                    <select name="quantite" style="width: 250px" onchange="this.form.submit()" >
-                        {% for i in  30..600 %}
-                            <option value="{{ i }}">{{ i }}</option>
-                        {% endfor %}
-                    </select>
-                </form>
+                <div class="col align-self-center">
+                    <form action="{{ path('ajout_produit', {'id': produit.id}) }}" method="post">
+                        <div class="form-group">
+                            <label for="couleur">Quelle est la couleur de votre {{ produit.nom }} ?</label><br>
+                            <input id="couleur" name="couleur" type="text" class="form-control"
+                                   data-control="hue" value="#0a0a0a" style="width: 20%; height: 20%; border: none">
+                        </div>
+                        <div id="account" class="form-group mb-4">
+                            <label for="quantite">Quantité minimum à réparer:</label>
+                            <input type="text" id="quantite" name="quantite"
+                                   style="border:0; color:#18d26e; font-weight:bold; background: #f7f7f7">
+                            <div id="slider-range-min" class="form-control"></div>
+                        </div>
 
-{#                <label for="quantite">Choissisez la quantité de produit a reparer </label>#}
+                        <div class="form-group">
+                            <button class="btn btn-success float-right" type="submit">Continuer</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="{{ asset('user_admin/assets/libs/jquery-minicolors/jquery.minicolors.css') }}">
+    <style>
+        .minicolors-theme-bootstrap .minicolors-swatch {
+            top: 3px;
+            left: 5px;
+            width: 18%;
+            height: 80%;
+            border: none;
+        }
+        .minicolors-swatch {
+            width: 18%;
+            height: 80%;
+        }
+    </style>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="{{ asset('user_admin/assets/libs/jquery-minicolors/jquery.minicolors.min.js') }}"></script>
+
     <script>
-        $(function() {
-            var el, newPoint, newPlace, offset;
-
-            // Select all range inputs, watch for change
-            $("input[type='range']").change(function() {
-
-                // Cache this for efficiency
-                el = $(this);
-
-                // Measure width of range input
-                width = el.width();
-
-                // Figure out placement percentage between left and right of input
-                newPoint = (el.val() - el.attr("min")) / (el.attr("max") - el.attr("min"));
-
-                // Janky value to get pointer to line up better
-                offset = -1.3;
-
-                // Prevent bubble from going beyond left or right (unsupported browsers)
-                if (newPoint < 0) { newPlace = 0; }
-                else if (newPoint > 1) { newPlace = width; }
-                else { newPlace = width * newPoint + offset; offset -= newPoint; }
-
-                // Move bubble
-                el
-                    .next("output")
-                    .css({
-                        left: newPlace,
-                        marginLeft: offset + "%"
-                    })
-                    .text(el.val());
+        $(function () {
+            var handle = $("#quantite");
+            var customSlider = $("#slider-range-min");
+            customSlider.slider({
+                range: "min",
+                min: 30,
+                max: 600,
+                value: this.min,
+                step: 30,
+                slide: function (event, ui) {
+                    handle.val(ui.value);
+                },
+            });
+            handle.val(customSlider.slider("value"));
+        });
+        $('#couleur').each(function () {
+            $(this).minicolors({
+                control: $(this).attr('data-control') || 'hue',
+                // position: $(this).attr('data-position') || 'bottom left',
+                inline: false,
+                theme: 'bootstrap',
+                change: function (value) {
+                    if (!value) return;
+                    if (typeof console === 'object') {
+                        console.log(value);
+                    }
+                }
             })
-            // Fake a change to position bubble at page load
-                .trigger('change');
         });
     </script>
 {% endblock %}
-
-
